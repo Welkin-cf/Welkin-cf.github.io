@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Welkin">
 <meta property="og:description" content="0.准备工作">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-09-16T09:18:37.156Z">
+<meta property="og:updated_time" content="2018-09-23T08:47:22.823Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用GitHub和hexo搭建个人博客">
 <meta name="twitter:description" content="0.准备工作">
@@ -184,7 +184,17 @@
 <h1 id="0-准备工作"><a href="#0-准备工作" class="headerlink" title="0.准备工作"></a>0.准备工作</h1><a id="more"></a>
 <p>需要准备的工具<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*一个github账号</span><br><span class="line">*安装node.js  ，git</span><br></pre></td></tr></table></figure><br>本文所用环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Windows10</span><br><span class="line">Git-2.19.0-64-bit</span><br><span class="line">node-v8.12.0-x64</span><br></pre></td></tr></table></figure></p>
 <h1 id="1-创建github仓库"><a href="#1-创建github仓库" class="headerlink" title="1.创建github仓库"></a>1.创建github仓库</h1><p>注册GitHub账号后，新建一个名为   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username.github.io</span><br></pre></td></tr></table></figure>   的仓库。用你的github用户名将username替换掉，比如说，如果你的github用户名是test，那么你就新建test.github.io的仓库（必须是你的用户名，其它名称无效），将来你的网站访问地址就是 <a href="http://test.github.io" target="_blank" rel="noopener">http://test.github.io</a><br>注意：<br>仓库创建成功不会立即生效，需要过一段时间，创建成功后，默认会在你这个仓库里生成一些示例页面，以后你的网站所有代码都是放在这个仓库里啦。</p>
-<h1 id="2-配置SSH-key"><a href="#2-配置SSH-key" class="headerlink" title="2.配置SSH key"></a>2.配置SSH key</h1><h1 id="（未完待续-orz。。"><a href="#（未完待续-orz。。" class="headerlink" title="（未完待续  orz。。"></a>（未完待续  orz。。</h1>
+<h1 id="2-配置SSH-key"><a href="#2-配置SSH-key" class="headerlink" title="2.配置SSH key"></a>2.配置SSH key</h1><p>为什么要配置这个呢？因为你提交代码肯定要拥有你的github权限才可以，但是直接使用用户名和密码太不安全了，所以我们使用ssh key来解决本地和服务器的连接问题。</p>
+<p>用git bash执行如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/. ssh #检查本机已存在的ssh密钥</span><br></pre></td></tr></table></figure><br>如果提示：No such file or directory 说明你是第一次使用git。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;邮件地址&quot;</span><br></pre></td></tr></table></figure><br>然后连续3次回车，最终会生成一个文件在用户目录下，打开用户目录，找到.ssh\id_rsa.pub文件，记事本打开并复制里面的内容，打开你的github主页，进入个人设置 -&gt; SSH and GPG keys -&gt; New SSH key：</p>
+<p>将刚复制的内容粘贴到key那里，title随便填，保存。</p>
+<h1 id="测试SSH是否配置成功"><a href="#测试SSH是否配置成功" class="headerlink" title="测试SSH是否配置成功"></a>测试SSH是否配置成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com # 注意邮箱地址不用改</span><br></pre></td></tr></table></figure>
+<p>如果提示Are you sure you want to continue connecting (yes/no)?，输入yes，然后会看到：</p>
+<p>Hi liuxianan! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
+<p>看到这个信息说明SSH已配置成功！<br>之后配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;liuxianan&quot;// 你的github用户名，非昵称</span><br><span class="line">$ git config --global user.email  &quot;xxx@qq.com&quot;// 填写你的github注册邮箱</span><br></pre></td></tr></table></figure></p>
+<h1 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3.安装hexo"></a>3.安装hexo</h1><p>git bash下执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo</span><br></pre></td></tr></table></figure><br>接着输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd /f/hexo/  #在f盘下新建一个名为hexo的文件夹，该文件夹用于存放代码</span><br><span class="line">                       #（文件位置和文件夹名称自行更替）</span><br><span class="line">$ hexo init</span><br></pre></td></tr></table></figure></p>
+<p>执行后hexo会自动下载一些文件到所指定目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g # 生成</span><br><span class="line">$ hexo s # 启动服务</span><br></pre></td></tr></table></figure><br>执行以上命令之后，hexo就会在public文件夹生成相关html文件，这些文件将来都是要提交到github去的。<br>hexo s是开启本地预览服务，打开浏览器访问 <a href="http://localhost:4000即可预览" target="_blank" rel="noopener">http://localhost:4000即可预览</a></p>
+<h1 id="4-主题更换及写博客"><a href="#4-主题更换及写博客" class="headerlink" title="4.主题更换及写博客"></a>4.主题更换及写博客</h1><h1 id="5-上传到github"><a href="#5-上传到github" class="headerlink" title="5.上传到github"></a>5.上传到github</h1><p>上传前准备<br>1.参照前面步骤确保已经配置好ssh key<br>2.配置_config.yml中有关deploy的部分：<br>先安装插件，git bash下输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure><br>打开根目录下的_config.yml（注意：确保是根目录下）<br>将deplay部分如下示范修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:username/username.github.io.git（username自行替换）</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure><br>配置完成后输入hexo d上传<br>上传完成后打开username.github.io即可打开博客页面</p>
+
       
 
       
@@ -297,6 +307,20 @@
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2018/09/23/c/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          C����ѧϰ�����ʼ�
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -418,6 +442,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">c����</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">默认</a>
