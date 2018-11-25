@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://welkin-cf.github.io">
-  <title>Archives | Welkin</title>
+  <title>存储结构与磁盘划分 | Welkin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="既然选择了远方，便只顾风雨兼程。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Welkin">
-<meta property="og:url" content="https://welkin-cf.github.io/archives/index.html">
+  <meta name="description" content="前言刚学习Linux时使用的是命令行界面，对文件进行操作都是通过手敲路径到达指定目录，而Linux的路径结构与Windows的结构存在差异，比如没有看到盘符，让初学的我很是疑惑。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="存储结构与磁盘划分">
+<meta property="og:url" content="https://welkin-cf.github.io/2018/11/25/Linux-1/index.html">
 <meta property="og:site_name" content="Welkin">
-<meta property="og:description" content="既然选择了远方，便只顾风雨兼程。">
+<meta property="og:description" content="前言刚学习Linux时使用的是命令行界面，对文件进行操作都是通过手敲路径到达指定目录，而Linux的路径结构与Windows的结构存在差异，比如没有看到盘符，让初学的我很是疑惑。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-25T09:27:29.083Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Welkin">
-<meta name="twitter:description" content="既然选择了远方，便只顾风雨兼程。">
+<meta name="twitter:title" content="存储结构与磁盘划分">
+<meta name="twitter:description" content="前言刚学习Linux时使用的是命令行界面，对文件进行操作都是通过手敲路径到达指定目录，而Linux的路径结构与Windows的结构存在差异，比如没有看到盘符，让初学的我很是疑惑。">
   
     <link rel="alternative" href="/atom.xml" title="Welkin" type="application/atom+xml">
   
@@ -143,36 +145,50 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Linux-1" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/25/Linux-1/" class="archive-article-date">
-  	<time datetime="2018-11-24T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-25</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/25/Linux-1/">存储结构与磁盘划分</a>
+    <h1 class="article-title" itemprop="name">
+      存储结构与磁盘划分
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/11/25/Linux-1/" class="archive-article-date">
+  	<time datetime="2018-11-24T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><pre><code>刚学习Linux时使用的是命令行界面，对文件进行操作都是通过手敲路径到达指定目录，而Linux的路径结构与Windows的结构存在差异，比如没有看到盘符，让初学的我很是疑惑。
+</code></pre><a id="more"></a>
+<h1 id="0-1一切从“-”开始"><a href="#0-1一切从“-”开始" class="headerlink" title="0.1一切从“/”开始"></a>0.1一切从“/”开始</h1><pre><code>在 Windows 操作系统中，想要找到一个文件，我们要依次进入该文件所在的磁盘分区（假设这里是 D 盘），然后在进入该分区下的具体目录，最终找到这个文件。但是在 Linux系统中并不存在 C/D/E/F 等盘符，Linux 系统中的一切文件都是从“根（/）”目录开始的，并按照文件系统层次化标准（FHS）采用树形结构来存放文件，以及定义了常见目录的用途。
+</code></pre><p>图1-1[Linux 系统中的文件存储结构]<br>图1-2[Linux 系统中常见的目录名称以及相应内容]<br>    在 Linux 系统中另外还有一个重要的概念 — 路径。路径指的是如何定位到某个文件，分为绝对路径与相对路径。绝对路径指的是从根目录（/）开始写起的文件或目录名称，而相对路径则指的是相对于当前路径的写法。</p>
+<h1 id="0-2主分区、扩展分区、逻辑分区概念"><a href="#0-2主分区、扩展分区、逻辑分区概念" class="headerlink" title="0.2主分区、扩展分区、逻辑分区概念"></a>0.2主分区、扩展分区、逻辑分区概念</h1><pre><code>主分区和逻辑分区很相似（主分区中不能再划分其他类型的分区，因此每个主分区都相当于一个逻辑磁盘），但主分区是直接在硬盘上划分的，逻辑分区则必须建立于扩展分区中，所谓拓展分区，严格地讲它不少一个实际意义的分区，她仅仅是一个指向下一个分区的指针，这种指针结构讲形成一个单向链表。
+</code></pre><p>图2-1[硬盘分区的规划]</p>
+<h1 id="0-3文件系统"><a href="#0-3文件系统" class="headerlink" title="0.3文件系统"></a>0.3文件系统</h1><pre><code>用户在硬件存储设备中执行的文件建立、写入、读取、修改、转存与控制等操作都是依靠文件系统来完成的。文件系统的作用是合理规划硬盘，以保证用户正常的使用需求。
+常见的文件系统有Ext3、Ext4、XFS。
+关于super block、inode、block（还没搞清楚）
+</code></pre><h1 id="0-4挂载硬件设备"><a href="#0-4挂载硬件设备" class="headerlink" title="0.4挂载硬件设备"></a>0.4挂载硬件设备</h1><pre><code>在拿到一块全新的硬盘存储设备后要先分区，然后格式化，最后才能挂载并正常使用。
+挂载：当用户需要使用硬盘设备或分区中的数据时，需要先将其与一个已存在的目录文件进行关联，而这个关联动作就是“挂载”。
+mount（挂载）命令
+</code></pre><p><code>格式为“mount 文件系统 挂载目录”</code><br>    系统在重启后挂载就会失效，也就是说我们需要每次开机后都手动挂载一下。如果想让硬件设备和目录永久地进行自动关联，就必须把挂载信息按照指定的填写格式“设备文件 挂载目录 格式类型 权限选项 是否备份 是否自检”写入到/etc/fstab 文件中。<br>图4-2[用于挂载信息的指定填写格式中，各字段所表示的意义]<br>    umount（撤销挂载）命令<br><code>格式为“umount [挂载点/设备文件]”</code></p>
+<h1 id="0-5添加硬盘设备"><a href="#0-5添加硬盘设备" class="headerlink" title="0.5添加硬盘设备"></a>0.5添加硬盘设备</h1><pre><code>fdisk命令
+</code></pre><p><code>格式为“fdisk [磁盘名称]”</code><br>    du命令<br><code>格式为“du [选项] [文件]”</code></p>
+<h1 id="0-6添加交换分区"><a href="#0-6添加交换分区" class="headerlink" title="0.6添加交换分区"></a>0.6添加交换分区</h1><p>=。=后面要开始学 RAID 和 LVM 了</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -184,133 +200,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://welkin-cf.github.io/2018/11/25/Linux-1/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/25/lamp/" class="archive-article-date">
-  	<time datetime="2018-11-24T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-25</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/25/lamp/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">LAMP环境搭建</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/25/lamp/">LAMP环境搭建</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">默认</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/11/md-language/" class="archive-article-date">
-  	<time datetime="2018-11-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/11/md-language/">markdown常用语法</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">标记语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/15/first/" class="archive-article-date">
-  	<time datetime="2018-09-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/15/first/">利用GitHub和hexo搭建个人博客</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">first</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -335,8 +324,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
