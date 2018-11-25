@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Welkin">
 <meta property="og:description" content="前言刚学习Linux时使用的是命令行界面，对文件进行操作都是通过手敲路径到达指定目录，而Linux的路径结构与Windows的结构存在差异，比如没有看到盘符，让初学的我很是疑惑。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-25T09:34:07.244Z">
+<meta property="og:updated_time" content="2018-11-25T09:43:36.351Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="存储结构与磁盘划分">
 <meta name="twitter:description" content="前言刚学习Linux时使用的是命令行界面，对文件进行操作都是通过手敲路径到达指定目录，而Linux的路径结构与Windows的结构存在差异，比如没有看到盘符，让初学的我很是疑惑。">
@@ -177,10 +177,8 @@
 关于super block、inode、block（还没搞清楚）
 </code></pre><h1 id="0-4挂载硬件设备"><a href="#0-4挂载硬件设备" class="headerlink" title="0.4挂载硬件设备"></a>0.4挂载硬件设备</h1><pre><code>在拿到一块全新的硬盘存储设备后要先分区，然后格式化，最后才能挂载并正常使用。
 挂载：当用户需要使用硬盘设备或分区中的数据时，需要先将其与一个已存在的目录文件进行关联，而这个关联动作就是“挂载”。
-mount（挂载）命令
-</code></pre><p><code>格式为“mount 文件系统 挂载目录”</code><br>    系统在重启后挂载就会失效，也就是说我们需要每次开机后都手动挂载一下。如果想让硬件设备和目录永久地进行自动关联，就必须把挂载信息按照指定的填写格式“设备文件 挂载目录 格式类型 权限选项 是否备份 是否自检”写入到/etc/fstab 文件中。<br>图4-2[用于挂载信息的指定填写格式中，各字段所表示的意义]<br>    umount（撤销挂载）命令<br><code>格式为“umount [挂载点/设备文件]”</code></p>
-<h1 id="0-5添加硬盘设备"><a href="#0-5添加硬盘设备" class="headerlink" title="0.5添加硬盘设备"></a>0.5添加硬盘设备</h1><pre><code>fdisk命令
-</code></pre><p><code>格式为“fdisk [磁盘名称]”</code><br>    du命令<br><code>格式为“du [选项] [文件]”</code></p>
+</code></pre><p>mount（挂载）命令<br><code>格式为“mount 文件系统 挂载目录”</code><br>    系统在重启后挂载就会失效，也就是说我们需要每次开机后都手动挂载一下。如果想让硬件设备和目录永久地进行自动关联，就必须把挂载信息按照指定的填写格式“设备文件 挂载目录 格式类型 权限选项 是否备份 是否自检”写入到/etc/fstab 文件中。<br>图4-2[用于挂载信息的指定填写格式中，各字段所表示的意义]<br>umount（撤销挂载）命令<br><code>格式为“umount [挂载点/设备文件]”</code></p>
+<h1 id="0-5添加硬盘设备"><a href="#0-5添加硬盘设备" class="headerlink" title="0.5添加硬盘设备"></a>0.5添加硬盘设备</h1><p>fdisk命令<br><code>格式为“fdisk [磁盘名称]”</code><br>du命令<br><code>格式为“du [选项] [文件]”</code></p>
 <h1 id="0-6添加交换分区"><a href="#0-6添加交换分区" class="headerlink" title="0.6添加交换分区"></a>0.6添加交换分区</h1><p>=。=后面要开始学 RAID 和 LVM 了</p>
 
       
@@ -405,15 +403,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">first</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">默认</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">first</a>
               </li>
              
               <li class="article-tag-list-item">
