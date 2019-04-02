@@ -6,18 +6,38 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://welkin-cf.github.io">
-  <title>Archives: 2018 | Welkin</title>
+  <title>树莓派3B+ 安装raspbian | Welkin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="既然选择了远方，便只顾风雨兼程。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Welkin">
-<meta property="og:url" content="https://welkin-cf.github.io/archives/2018/index.html">
+  <meta name="description" content="树莓派到手后第一个装的系统, 之前简单记录了一下, 今天找时间整理了一下然后贴到blog来了.注: 由于没有外接屏幕所以是使用ssh和xrdp连接树莓派.">
+<meta name="keywords" content="raspberry_pi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树莓派3B+ 安装raspbian">
+<meta property="og:url" content="https://welkin-cf.github.io/2019/03/31/raspberry_pi_1/index.html">
 <meta property="og:site_name" content="Welkin">
-<meta property="og:description" content="既然选择了远方，便只顾风雨兼程。">
+<meta property="og:description" content="树莓派到手后第一个装的系统, 之前简单记录了一下, 今天找时间整理了一下然后贴到blog来了.注: 由于没有外接屏幕所以是使用ssh和xrdp连接树莓派.">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/0060E8K6gy1g1m4l4ckjcj30dl0ewwfm.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/0060E8K6gy1g1m4l4osdmj30gh08075e.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/0060E8K6gy1g1m4l5124yj30bd094q3u.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/0060E8K6gy1g1m4l5etgnj30dl0ewt9u.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/0060E8K6gy1g1m4tm97wnj30de09imx7.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/0060E8K6gy1g1m4to74oyj30ky0m9go0.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/0060E8K6gy1g1m4tml77yj30cb09omxi.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/0060E8K6gy1g1m4tmx5thj30em0krdh2.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/0060E8K6gy1g1m4tna8nyj30op0d6q37.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/0060E8K6gy1g1m4tnr1vmj30op0d6q3d.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/0060E8K6gy1g1m4tonn61j30gq0f3t9e.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/0060E8K6gy1g1m4tp1gvuj30f40ayaac.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/0060E8K6gy1g1m4tpgd9wj30mx0eh748.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/0060E8K6gy1g1m4tptr42j30mx0ehaau.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/0060E8K6gy1g1m4tq6ixlj30gy0ajq3e.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/0060E8K6gy1g1m4tqn8frj30gb093t99.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/0060E8K6gy1g1m4tr4hw7j30ls0ggk14.jpg">
+<meta property="og:updated_time" content="2019-04-02T07:05:50.750Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Welkin">
-<meta name="twitter:description" content="既然选择了远方，便只顾风雨兼程。">
+<meta name="twitter:title" content="树莓派3B+ 安装raspbian">
+<meta name="twitter:description" content="树莓派到手后第一个装的系统, 之前简单记录了一下, 今天找时间整理了一下然后贴到blog来了.注: 由于没有外接屏幕所以是使用ssh和xrdp连接树莓派.">
+<meta name="twitter:image" content="http://wx1.sinaimg.cn/mw690/0060E8K6gy1g1m4l4ckjcj30dl0ewwfm.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Welkin" type="application/atom+xml">
   
@@ -143,60 +163,246 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-raspberry_pi_1" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/15/hello_world/" class="archive-article-date">
-  	<time datetime="2018-09-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-15</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/15/hello_world/">利用GitHub和hexo搭建个人博客</a>
+    <h1 class="article-title" itemprop="name">
+      树莓派3B+ 安装raspbian
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/03/31/raspberry_pi_1/" class="archive-article-date">
+  	<time datetime="2019-03-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>树莓派到手后第一个装的系统, 之前简单记录了一下, 今天找时间整理了一下然后贴到blog来了.<br>注: 由于没有外接屏幕所以是使用ssh和xrdp连接树莓派. </p>
+<a id="more"></a>
+<h1 id="0x0-准备工作"><a href="#0x0-准备工作" class="headerlink" title="0x0. 准备工作"></a>0x0. 准备工作</h1><ul>
+<li><a href="https://www.raspberrypi.org/downloads/raspbian/" title="Raspbian镜像" target="_blank" rel="noopener">Raspberry镜像下载</a></li>
+<li>SD card formatter: 格式化tf卡</li>
+<li>win32diskimager: 写入镜像</li>
+<li>Advanced_IP_Scanner: 用于在PC上确定树莓派IP</li>
+<li>PuTTY: SSH客户端</li>
+<li>此外还需要一台能联网的电脑以及一条网线(网线用于连接树莓派和电脑网络)</li>
+<li>软件打包下载: 链接: <a href="https://pan.baidu.com/s/1ugoba8RgfbLrlHSBzjYaJg" target="_blank" rel="noopener">https://pan.baidu.com/s/1ugoba8RgfbLrlHSBzjYaJg</a> 提取码: u3aj </li>
+</ul>
+<h1 id="0x1-将树莓派镜像写进tf卡"><a href="#0x1-将树莓派镜像写进tf卡" class="headerlink" title="0x1. 将树莓派镜像写进tf卡"></a>0x1. 将树莓派镜像写进tf卡</h1><ul>
+<li><p>先打开 SD card formatter 格式化tf卡</p>
+</li>
+<li><p><img src="http://wx1.sinaimg.cn/mw690/0060E8K6gy1g1m4l4ckjcj30dl0ewwfm.jpg" alt=""></p>
+</li>
+<li><p><img src="http://wx4.sinaimg.cn/mw690/0060E8K6gy1g1m4l4osdmj30gh08075e.jpg" alt=""></p>
+</li>
+<li><p><img src="http://wx4.sinaimg.cn/mw690/0060E8K6gy1g1m4l5124yj30bd094q3u.jpg" alt=""></p>
+</li>
+<li><p><img src="http://wx2.sinaimg.cn/mw690/0060E8K6gy1g1m4l5etgnj30dl0ewt9u.jpg" alt=""></p>
+</li>
+<li><p>使用 win32diskimager 写入镜像</p>
+</li>
+<li><p><img src="http://wx2.sinaimg.cn/mw690/0060E8K6gy1g1m4tm97wnj30de09imx7.jpg" alt=""></p>
+</li>
+<li><p>写入完毕后在tf卡识别为boot的分区中新建记事本并改名为ssh(不保留后缀)</p>
+</li>
+<li><p><img src="http://wx1.sinaimg.cn/mw690/0060E8K6gy1g1m4to74oyj30ky0m9go0.jpg" alt=""></p>
+</li>
+<li><p>弹出u盘</p>
+</li>
+</ul>
+<h1 id="0x2-配置本地PC"><a href="#0x2-配置本地PC" class="headerlink" title="0x2. 配置本地PC"></a>0x2. 配置本地PC</h1><ul>
+<li>插入tf卡,电源,使用网线将树莓派和笔电连接起来,启动树莓派<br>(笔者是电脑连接校园网WiFi,用网线使树莓派和笔记本网络共享)</li>
+<li><p>修改网络属性(控制面板\网络和 Internet\网络连接)</p>
+</li>
+<li><p><img src="http://wx1.sinaimg.cn/mw690/0060E8K6gy1g1m4tml77yj30cb09omxi.jpg" alt=""></p>
+</li>
+<li><p><img src="http://wx3.sinaimg.cn/mw690/0060E8K6gy1g1m4tmx5thj30em0krdh2.jpg" alt=""></p>
+</li>
+<li><p>使用 Advanced_IP_Scanner 确定树莓派IP</p>
+</li>
+<li><p><img src="http://wx3.sinaimg.cn/mw690/0060E8K6gy1g1m4tna8nyj30op0d6q37.jpg" alt=""></p>
+</li>
+<li><p><img src="http://wx3.sinaimg.cn/mw690/0060E8K6gy1g1m4tnr1vmj30op0d6q3d.jpg" alt=""></p>
+</li>
+<li><p>使用PuTTY连接树莓派ssh, 填入刚刚得到的IP地址</p>
+</li>
+<li><p><img src="http://wx2.sinaimg.cn/mw690/0060E8K6gy1g1m4tonn61j30gq0f3t9e.jpg" alt=""></p>
+</li>
+<li><p><img src="http://wx2.sinaimg.cn/mw690/0060E8K6gy1g1m4tp1gvuj30f40ayaac.jpg" alt=""></p>
+</li>
+<li><p>用户名pi</p>
+</li>
+<li><p>密码raspberry(输入密码时不显示<strong><strong>*</strong></strong>,输入完毕后回车)</p>
+</li>
+<li><p><img src="http://wx2.sinaimg.cn/mw690/0060E8K6gy1g1m4tpgd9wj30mx0eh748.jpg" alt=""></p>
+</li>
+<li><p><img src="http://wx2.sinaimg.cn/mw690/0060E8K6gy1g1m4tptr42j30mx0ehaau.jpg" alt=""></p>
+</li>
+</ul>
+<h1 id="0x3-配置树莓派"><a href="#0x3-配置树莓派" class="headerlink" title="0x3. 配置树莓派"></a>0x3. 配置树莓派</h1><p>修改软件源(Debian 9 (stretch)):</p>
+<pre><code>sudo nano /etc/apt/sources.list
+</code></pre><p>使用#注释原文件所有内容，用以下内容取代:</p>
+<pre><code>deb http://mirrors.scau.edu.cn/raspbian/raspbian/ stretch main non-free contrib
+deb-src http://mirrors.scau.edu.cn/raspbian/raspbian/ stretch main non-free contrib
+</code></pre><ul>
+<li>保存: Ctrl+O 并 回车确认</li>
+<li>退出: Ctrl+X</li>
+</ul>
+<p>更新软件源:</p>
+<pre><code>sudo apt-get update
+</code></pre><p>安装xrdp:</p>
+<pre><code>sudo apt-get install xrdp (期间输入Y继续)
+</code></pre><h1 id="0x4-连接树莓派桌面"><a href="#0x4-连接树莓派桌面" class="headerlink" title="0x4. 连接树莓派桌面"></a>0x4. 连接树莓派桌面</h1><ul>
+<li><p>在笔电上打开 Windows附件\远程桌面连接 输入刚刚的ip地址,连接,再输入用户名和密码登录</p>
+</li>
+<li><p><img src="http://wx3.sinaimg.cn/mw690/0060E8K6gy1g1m4tq6ixlj30gy0ajq3e.jpg" alt=""></p>
+</li>
+<li><p><img src="http://wx1.sinaimg.cn/mw690/0060E8K6gy1g1m4tqn8frj30gb093t99.jpg" alt=""></p>
+</li>
+<li><p>登陆成功</p>
+</li>
+<li><p><img src="http://wx4.sinaimg.cn/mw690/0060E8K6gy1g1m4tr4hw7j30ls0ggk14.jpg" alt=""></p>
+</li>
+</ul>
+<p>附: </p>
+<p>设置ssh开机自启, 打开/etc/rc.local文件,在语句exit 0之前加入:</p>
+<pre><code>/etc/init.d/ssh start
+</code></pre><p>安装vncserver:</p>
+<pre><code>sudo apt-get install tightvncserver
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hello_world</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">raspberry_pi</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://welkin-cf.github.io/2019/03/31/raspberry_pi_1/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2019/04/02/reverse_1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          OllyDB入门学习
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2019/02/24/sum_1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">寒假总结</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -221,8 +427,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

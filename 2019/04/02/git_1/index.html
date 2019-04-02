@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://welkin-cf.github.io">
-  <title>Archives: 2018 | Welkin</title>
+  <title>GitHub 提交PR | Welkin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="既然选择了远方，便只顾风雨兼程。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Welkin">
-<meta property="og:url" content="https://welkin-cf.github.io/archives/2018/index.html">
+  <meta name="description" content="之前第一次使用Git进行pr的一些记录, 然后今天按这个操作的时候出现了一些问题,正在参看 GitHub入门与实践 进行学习.">
+<meta name="keywords" content="Git&amp;&amp;GitHub">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GitHub 提交PR">
+<meta property="og:url" content="https://welkin-cf.github.io/2019/04/02/git_1/index.html">
 <meta property="og:site_name" content="Welkin">
-<meta property="og:description" content="既然选择了远方，便只顾风雨兼程。">
+<meta property="og:description" content="之前第一次使用Git进行pr的一些记录, 然后今天按这个操作的时候出现了一些问题,正在参看 GitHub入门与实践 进行学习.">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-02T07:08:00.633Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Welkin">
-<meta name="twitter:description" content="既然选择了远方，便只顾风雨兼程。">
+<meta name="twitter:title" content="GitHub 提交PR">
+<meta name="twitter:description" content="之前第一次使用Git进行pr的一些记录, 然后今天按这个操作的时候出现了一些问题,正在参看 GitHub入门与实践 进行学习.">
   
     <link rel="alternative" href="/atom.xml" title="Welkin" type="application/atom+xml">
   
@@ -143,60 +145,167 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-git_1" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/15/hello_world/" class="archive-article-date">
-  	<time datetime="2018-09-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-15</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/15/hello_world/">利用GitHub和hexo搭建个人博客</a>
+    <h1 class="article-title" itemprop="name">
+      GitHub 提交PR
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/04/02/git_1/" class="archive-article-date">
+  	<time datetime="2019-04-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前第一次使用Git进行pr的一些记录, 然后今天按这个操作的时候出现了一些问题,正在参看 <strong>GitHub入门与实践</strong> 进行学习. </p>
+<a id="more"></a>
+<h1 id="0x0-准备"><a href="#0x0-准备" class="headerlink" title="0x0. 准备"></a>0x0. 准备</h1><p>一个github账号, 在PC上安装git并添加ssh密匙</p>
+<h1 id="0x1-fork-amp-amp-clone"><a href="#0x1-fork-amp-amp-clone" class="headerlink" title="0x1. fork&amp;&amp;clone"></a>0x1. fork&amp;&amp;clone</h1><p>首先找要fork的项目,将项目fork到自己的仓库中,然后在自己的仓库中 <strong>Clone or download</strong> 按钮下找到一个https链接并复制, 接着在本地找一个存放项目的位置 <strong>右键-&gt;Git Bash</strong> , 打开bash后输入:</p>
+<pre><code>git clone https://... #前面复制的https链接
+</code></pre><p>即可把仓库中的项目下载到本地. </p>
+<p>然后可以使用如下命令查看状态:</p>
+<pre><code>git status #提示当前属于master分支
+
+git remote -v #提示当前只与自己的远程仓库建立连接
+</code></pre><h1 id="0x2-与上游建立连接"><a href="#0x2-与上游建立连接" class="headerlink" title="0x2. 与上游建立连接"></a>0x2. 与上游建立连接</h1><p>这里上游指的是一开始fork的那个项目源,而非fork后的仓库地址,可以输入:</p>
+<pre><code>git remote add upsrteam https://... #项目源地址
+</code></pre><h1 id="0x3-创建分支"><a href="#0x3-创建分支" class="headerlink" title="0x3. 创建分支"></a>0x3. 创建分支</h1><pre><code>git checkout -b name #name为你的分支名称
+</code></pre><p>运行完这个命令会创建一个名为name的分支，并且bash将自动切换到新的分支下</p>
+<h1 id="0x4-修改代码"><a href="#0x4-修改代码" class="headerlink" title="0x4. 修改代码"></a>0x4. 修改代码</h1><h1 id="0x5-提交代码"><a href="#0x5-提交代码" class="headerlink" title="0x5. 提交代码"></a>0x5. 提交代码</h1><p>可以使用 <strong>git status</strong> 来查看被修改的文件.</p>
+<pre><code>git add -A #提交全部修改,左边网址是对git add命令参数的介绍 http://www.softwhy.com/article-8489-1.html
+
+git commit -m &quot;modify XX&quot; #将修改的代码提交到当前分支(本地), 而不是master, &quot;modify XX&quot;是本次提交的简单说明
+
+git push origin name #将当前分支推送到自己的远程仓库
+</code></pre><h1 id="0x6-提交PR"><a href="#0x6-提交PR" class="headerlink" title="0x6. 提交PR"></a>0x6. 提交PR</h1><p>回到github, 找到 <strong>New pull request</strong> , <strong>compare</strong> 出选择刚刚提交的分支, 然后 <strong>Create pull request</strong> , 按要求填好然后提交,搞定. </p>
+<h1 id="0x7"><a href="#0x7" class="headerlink" title="0x7"></a>0x7</h1><p>今天在centos上安装git, 使用中配置ssh出现问题没有配置成功(还没找到问题), 然后本地改完代码最后 <strong>git push</strong> 的时候发现因为之前创建的分支落后于master, 导致提交失败, 在网上查了一下但是问题暂未解决, 先去看 <strong>GitHub入门与实践</strong> 系统学一学. </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hello_world</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Git&&GitHub</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://welkin-cf.github.io/2019/04/02/git_1/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/04/02/essay_1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">DATE:2019-4-2</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -221,8 +330,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
