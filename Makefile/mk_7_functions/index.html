@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://welkin-cf.github.io">
-  <title>跟我一起写 Makefile(三) | Welkin</title>
+  <title>跟我一起写 Makefile(七) | Welkin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="书写规则规则包含两个部分，一个是依赖关系，一个是生成目标的方法。">
+  <meta name="description" content="使用函数在Makefile中可以使用函数来处理变量，从而让我们的命令或是规则更为的灵活和具有智能。">
 <meta name="keywords" content="Makefile">
 <meta property="og:type" content="article">
-<meta property="og:title" content="跟我一起写 Makefile(三)">
-<meta property="og:url" content="https://welkin-cf.github.io/Makefile/mk_3_rules/index.html">
+<meta property="og:title" content="跟我一起写 Makefile(七)">
+<meta property="og:url" content="https://welkin-cf.github.io/Makefile/mk_7_functions/index.html">
 <meta property="og:site_name" content="Welkin">
-<meta property="og:description" content="书写规则规则包含两个部分，一个是依赖关系，一个是生成目标的方法。">
+<meta property="og:description" content="使用函数在Makefile中可以使用函数来处理变量，从而让我们的命令或是规则更为的灵活和具有智能。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-01T04:33:23.075Z">
+<meta property="og:updated_time" content="2019-08-01T06:45:49.958Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="跟我一起写 Makefile(三)">
-<meta name="twitter:description" content="书写规则规则包含两个部分，一个是依赖关系，一个是生成目标的方法。">
+<meta name="twitter:title" content="跟我一起写 Makefile(七)">
+<meta name="twitter:description" content="使用函数在Makefile中可以使用函数来处理变量，从而让我们的命令或是规则更为的灵活和具有智能。">
   
   
     <link rel="icon" href="/favicon.png">
@@ -139,211 +139,277 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-mk_3_rules" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-mk_7_functions" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      跟我一起写 Makefile(三)
+      跟我一起写 Makefile(七)
     </h1>
   
 
         
-        <a href="/Makefile/mk_3_rules/" class="archive-article-date">
-  	<time datetime="2019-07-02T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-03</time>
+        <a href="/Makefile/mk_7_functions/" class="archive-article-date">
+  	<time datetime="2019-07-06T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="书写规则"><a href="#书写规则" class="headerlink" title="书写规则"></a>书写规则</h2><p>规则包含两个部分，一个是依赖关系，一个是生成目标的方法。<br><a id="more"></a><br>在Makefile中，规则的顺序是很重要的，因为，Makefile中只应该有一个最终目标，其它的目标都是被这个目标所连带出来的，所以一定要让make知道你的最终目标是什么。一般来说，定义在Makefile中的目标可能会有很多，但是第一条规则中的目标将被确立为最终的目标。如果第一条规则中的目标有很多个，那么，第一个目标会成为最终的目标。make所完成的也就是这个目标。</p>
-<p>好了，还是让我们来看一看如何书写规则。</p>
-<h2 id="规则举例"><a href="#规则举例" class="headerlink" title="规则举例"></a>规则举例</h2><pre><code>foo.o: foo.c defs.h       # foo模块
-    cc -c -g foo.c
-</code></pre><p>看到这个例子，各位应该不是很陌生了，前面也已说过， <code>foo.o</code> 是我们的目标， <code>foo.c</code> 和<code>defs.h</code> 是目标所依赖的源文件，而只有一个命令 <code>cc -c -g foo.c</code> （以Tab键开头）。这个规则告诉我们两件事：</p>
-<ol>
-<li>文件的依赖关系， <code>foo.o</code> 依赖于 <code>foo.c</code> 和 <code>defs.h</code> 的文件，如果 <code>foo.c</code>和 <code>defs.h</code> 的文件日期要比 <code>foo.o</code> 文件日期要新，或是 <code>foo.o</code> 不存在，那么依赖关系发生。</li>
-<li>生成或更新 <code>foo.o</code> 文件，就是那个cc命令。它说明了如何生成 <code>foo.o</code> 这个文件。（当然，foo.c文件include了defs.h文件）</li>
-</ol>
-<h2 id="规则的语法"><a href="#规则的语法" class="headerlink" title="规则的语法"></a>规则的语法</h2><pre><code>targets : prerequisites
-    command
-    ...
-</code></pre><p>或是这样：</p>
-<pre><code>targets : prerequisites ; command
-    command
-    ...
-</code></pre><p>targets是文件名，以空格分开，可以使用通配符。一般来说，我们的目标基本上是一个文件，但也有可能是多个文件。</p>
-<p>command是命令行，如果其不与“target:prerequisites”在一行，那么，必须以 <code>Tab</code> 键开头，如果和prerequisites在一行，那么可以用分号做为分隔。（见上）</p>
-<p>prerequisites也就是目标所依赖的文件（或依赖目标）。如果其中的某个文件要比目标文件要新，那么，目标就被认为是“过时的”，被认为是需要重生成的。这个在前面已经讲过了。</p>
-<p>如果命令太长，你可以使用反斜杠（ <code>\</code> ）作为换行符。make对一行上有多少个字符没有限制。规则告诉make两件事，文件的依赖关系和如何生成目标文件。</p>
-<p>一般来说，make会以UNIX的标准Shell，也就是 <code>/bin/sh</code> 来执行命令。</p>
-<h2 id="在规则中使用通配符"><a href="#在规则中使用通配符" class="headerlink" title="在规则中使用通配符"></a>在规则中使用通配符</h2><p>如果我们想定义一系列比较类似的文件，我们很自然地就想起使用通配符。make支持三个通配符：<code>*</code> ， <code>?</code> 和 <code>~</code> 。这是和Unix的B-Shell是相同的。</p>
-<p>波浪号（ <code>~</code> ）字符在文件名中也有比较特殊的用途。如果是 <code>~/test</code> ，这就表示当前用户的 <code>$HOME</code> 目录下的test目录。而 <code>~hchen/test</code> 则表示用户hchen的宿主目录下的test目录。（这些都是Unix下的小知识了，make也支持）而在Windows或是 MS-DOS下，用户没有宿主目录，那么波浪号所指的目录则根据环境变量“HOME”而定。</p>
-<p>通配符代替了你一系列的文件，如 <code>*.c</code> 表示所有后缀为c的文件。一个需要我们注意的是，如果我们的文件名中有通配符，如： <code>*</code> ，那么可以用转义字符 <code>\</code> ，如 <code>\*</code> 来表示真实的 <code>*</code>字符，而不是任意长度的字符串。</p>
-<p>好吧，还是先来看几个例子吧：</p>
-<pre><code>clean:
-    rm -f *.o
-</code></pre><p>其实在这个clean:后面可以加上你想做的一些事情，如果你想看到在编译完后看看main.c的源代码，你可以在加上cat这个命令，例子如下：</p>
-<pre><code>clean:
-    cat main.c
-    rm -f *.o
-</code></pre><p>其结果你试一下就知道的。 上面这个例子我不不多说了，这是操作系统Shell所支持的通配符。这是在命令中的通配符。</p>
-<pre><code>print: *.c
-    lpr -p $?
-    touch print
-</code></pre><p>上面这个例子说明了通配符也可以在我们的规则中，目标print依赖于所有的 <code>.c</code> 文件。其中的<code>$?</code> 是一个自动化变量，我会在后面给你讲述。</p>
-<pre><code>objects = *.o
-</code></pre><p>上面这个例子，表示了通配符同样可以用在变量中。并不是说 <code>*.o</code> 会展开，不！objects的值就是<code>*.o</code> 。Makefile中的变量其实就是C/C++中的宏。如果你要让通配符在变量中展开，也就是让objects的值是所有 <code>.o</code> 的文件名的集合，那么，你可以这样：</p>
-<pre><code>objects := $(wildcard *.o)
-</code></pre><p>另给一个变量使用通配符的例子：</p>
-<ol>
-<li>列出一确定文件夹中的所有 <code>.c</code> 文件。</li>
-</ol>
-<pre><code>objects := $(wildcard *.c)
-</code></pre><ol>
-<li>列出(1)中所有文件对应的 <code>.o</code> 文件，在（3）中我们可以看到它是由make自动编译出的:</li>
-</ol>
-<pre><code>$(patsubst %.c,%.o,$(wildcard *.c))
-</code></pre><ol>
-<li>由(1)(2)两步，可写出编译并链接所有 <code>.c</code> 和 <code>.o</code> 文件</li>
-</ol>
-<pre><code>objects := $(patsubst %.c,%.o,$(wildcard *.c))
-foo : $(objects)
-    cc -o foo $(objects)
-</code></pre><p>这种用法由关键字“wildcard”，“patsubst”指出，关于Makefile的关键字，我们将在后面讨论。</p>
-<h2 id="文件搜寻"><a href="#文件搜寻" class="headerlink" title="文件搜寻"></a>文件搜寻</h2><p>在一些大的工程中，有大量的源文件，我们通常的做法是把这许多的源文件分类，并存放在不同的目录中。所以，当make需要去找寻文件的依赖关系时，你可以在文件前加上路径，但最好的方法是把一个路径告诉make，让make在自动去找。</p>
-<p>Makefile文件中的特殊变量 <code>VPATH</code> 就是完成这个功能的，如果没有指明这个变量，make只会在当前的目录中去找寻依赖文件和目标文件。如果定义了这个变量，那么，make就会在当前目录找不到的情况下，到所指定的目录中去找寻文件了。</p>
-<pre><code>VPATH = src:../headers
-</code></pre><p>上面的定义指定两个目录，“src”和“../headers”，make会按照这个顺序进行搜索。目录由“冒号”分隔。（当然，当前目录永远是最高优先搜索的地方）</p>
-<p>另一个设置文件搜索路径的方法是使用make的“vpath”关键字（注意，它是全小写的），这不是变量，这是一个make的关键字，这和上面提到的那个VPATH变量很类似，但是它更为灵活。它可以指定不同的文件在不同的搜索目录中。这是一个很灵活的功能。它的使用方法有三种：</p>
-<p><table><tr><td bgcolor="#CCFFFF"> vpath  &lt;pattern&gt;  &lt;directories&gt; </td></tr></table>为符合模式&lt;pattern&gt;的文件指定搜索目录&lt;directories&gt;。</p>
-<p><table><tr><td bgcolor="#CCFFFF"> vpath  &lt;pattern&gt; </td></tr></table>清除符合模式&lt;pattern&gt;的文件的搜索目录。</p>
-<p><table><tr><td bgcolor="#CCFFFF"> vpath </td></tr></table>清除所有已被设置好了的文件搜索目录。</p>
-<p>vapth使用方法中的<pattern>需要包含 <code>%</code> 字符。 <code>%</code> 的意思是匹配零或若干字符，（需引用<code>%</code> ，使用 <code>\</code> ）例如， <code>%.h</code> 表示所有以 <code>.h</code> 结尾的文件。<pattern>指定了要搜索的文件集，而<directories>则指定了&lt; pattern&gt;的文件集的搜索的目录。例如：</directories></pattern></pattern></p>
-<pre><code>vpath %.h ../headers
-</code></pre><p>该语句表示，要求make在“../headers”目录下搜索所有以 <code>.h</code> 结尾的文件。（如果某文件在当前目录没有找到的话）</p>
-<p>我们可以连续地使用vpath语句，以指定不同搜索策略。如果连续的vpath语句中出现了相同的<pattern>，或是被重复了的<pattern>，那么，make会按照vpath语句的先后顺序来执行搜索。如：</pattern></pattern></p>
-<pre><code>vpath %.c foo
-vpath %   blish
-vpath %.c bar
-</code></pre><p>其表示 <code>.c</code>  结尾的文件，先在“foo”目录，然后是“blish”，最后是“bar”目录。</p>
-<pre><code>vpath %.c foo:bar
-vpath %   blish
-</code></pre><p>而上面的语句则表示 <code>.c</code> 结尾的文件，先在“foo”目录，然后是“bar”目录，最后才是“blish”目录。</p>
-<h2 id="伪目标"><a href="#伪目标" class="headerlink" title="伪目标"></a>伪目标</h2><p>最早先的一个例子中，我们提到过一个“clean”的目标，这是一个“伪目标”，</p>
-<pre><code>clean:
-    rm *.o temp
-</code></pre><p>正像我们前面例子中的“clean”一样，既然我们生成了许多文件编译文件，我们也应该提供一个清除它们的“目标”以备完整地重编译而用。 （以“make clean”来使用该目标）</p>
-<p>因为，我们并不生成“clean”这个文件。“伪目标”并不是一个文件，只是一个标签，由于“伪目标”不是文件，所以make无法生成它的依赖关系和决定它是否要执行。我们只有通过显式地指明这个“目标”才能让其生效。当然，“伪目标”的取名不能和文件名重名，不然其就失去了“伪目标”的意义了。</p>
-<p>当然，为了避免和文件重名的这种情况，我们可以使用一个特殊的标记“.PHONY”来显式地指明一个目标是“伪目标”，向make说明，不管是否有这个文件，这个目标就是“伪目标”。</p>
-<pre><code>.PHONY : clean
-</code></pre><p>只要有这个声明，不管是否有“clean”文件，要运行“clean”这个目标，只有“make clean”这样。于是整个过程可以这样写：</p>
-<pre><code>.PHONY : clean
-clean :
-    rm *.o temp
-</code></pre><p>伪目标一般没有依赖的文件。但是，我们也可以为伪目标指定所依赖的文件。伪目标同样可以作为“默认目标”，只要将其放在第一个。一个示例就是，如果你的Makefile需要一口气生成若干个可执行文件，但你只想简单地敲一个make完事，并且，所有的目标文件都写在一个Makefile中，那么你可以使用“伪目标”这个特性：</p>
-<pre><code>all : prog1 prog2 prog3
-.PHONY : all
+        <h2 id="使用函数"><a href="#使用函数" class="headerlink" title="使用函数"></a>使用函数</h2><p>在Makefile中可以使用函数来处理变量，从而让我们的命令或是规则更为的灵活和具有智能。<a id="more"></a>make所支持的函数也不算很多，不过已经足够我们的操作了。函数调用后，函数的返回值可以当做变量来使用。</p>
+<h2 id="函数的调用语法"><a href="#函数的调用语法" class="headerlink" title="函数的调用语法"></a>函数的调用语法</h2><p>函数调用，很像变量的使用，也是以 <code>$</code> 来标识的，其语法如下：</p>
+<pre><code>$(&lt;function&gt; &lt;arguments&gt;)
+</code></pre><p>或是:</p>
+<pre><code>${&lt;function&gt; &lt;arguments&gt;}
+</code></pre><p>这里， <code>&lt;function&gt;</code> 就是函数名，make支持的函数不多。 <code>&lt;arguments&gt;</code> 为函数的参数，参数间以逗号 <code>,</code> 分隔，而函数名和参数之间以“空格”分隔。函数调用以 <code>$</code> 开头，以圆括号或花括号把函数名和参数括起。感觉很像一个变量，是不是？函数中的参数可以使用变量，为了风格的统一，函数和变量的括号最好一样，如使用 <code>$(subst a,b,$(x))</code> 这样的形式，而不是<code>$(subst a,b, ${x})</code> 的形式。因为统一会更清楚，也会减少一些不必要的麻烦。</p>
+<p>还是来看一个示例：</p>
+<pre><code>comma:= ,
+empty:=
+space:= $(empty) $(empty)
+foo:= a b c
+bar:= $(subst $(space),$(comma),$(foo))
+</code></pre><p>在这个示例中， <code>$(comma)</code> 的值是一个逗号。 <code>$(space)</code> 使用了 <code>$(empty)</code> 定义了一个空格， <code>$(foo)</code> 的值是 <code>a b c</code> ， <code>$(bar)</code> 的定义用，调用了函数 <code>subst</code> ，这是一个替换函数，这个函数有三个参数，第一个参数是被替换字串，第二个参数是替换字串，第三个参数是替换操作作用的字串。这个函数也就是把 <code>$(foo)</code> 中的空格替换成逗号，所以 <code>$(bar)</code> 的值是 <code>a,b,c</code> 。</p>
+<h2 id="字符串处理函数"><a href="#字符串处理函数" class="headerlink" title="字符串处理函数"></a>字符串处理函数</h2><h3 id="subst"><a href="#subst" class="headerlink" title="subst"></a>subst</h3><pre><code>$(subst &lt;from&gt;,&lt;to&gt;,&lt;text&gt;)
+</code></pre><ul>
+<li>名称：字符串替换函数</li>
+<li>功能：把字串 <code>&lt;text&gt;</code> 中的 <code>&lt;from&gt;</code> 字符串替换成 <code>&lt;to&gt;</code> 。</li>
+<li><p>返回：函数返回被替换过后的字符串。</p>
+</li>
+<li><p>示例：</p>
+</li>
+</ul>
+<pre><code>$(subst ee,EE,feet on the street)
+</code></pre><p>把 <code>feet on the street</code> 中的 <code>ee</code> 替换成 <code>EE</code> ，返回结果是 <code>fEEt on the strEEt</code> 。</p>
+<h3 id="patsubst"><a href="#patsubst" class="headerlink" title="patsubst"></a>patsubst</h3><pre><code>$(patsubst &lt;pattern&gt;,&lt;replacement&gt;,&lt;text&gt;)
+</code></pre><ul>
+<li>名称：模式字符串替换函数。</li>
+<li>功能：查找 <code>&lt;text&gt;</code> 中的单词（单词以“空格”、“Tab”或“回车”“换行”分隔）是否符合模式  <code>&lt;pattern&gt;</code> ，如果匹配的话，则以 <code>&lt;replacement&gt;</code> 替换。这里， <code>&lt;pattern&gt;</code> 可以包括通配符 <code>%</code> ，表示任意长度的字串。如果 <code>&lt;replacement&gt;</code> 中也包含 <code>%</code> ，那么， <code>&lt;replacement&gt;</code> 中的这个 <code>%</code> 将是 <code>&lt;pattern&gt;</code> 中的那个 <code>%</code> 所代表的字串。（可以用 <code>\</code> 来转义，以 <code>\%</code> 来表示真实含义的 <code>%</code> 字符）</li>
+<li>返回：函数返回被替换过后的字符串。</li>
+<li>示例：</li>
+</ul>
+<pre><code>$(patsubst %.c,%.o,x.c.c bar.c)
+</code></pre><p>把字串 <code>x.c.c bar.c</code> 符合模式 <code>%.c</code> 的单词替换成 <code>%.o</code> ，返回结果是<code>x.c.o bar.o</code></p>
+<ul>
+<li>备注：这和我们前面“变量章节”说过的相关知识有点相似。如<code>$(var:&lt;pattern&gt;=&lt;replacement&gt;;)</code> 相当于<code>$(patsubst &lt;pattern&gt;,&lt;replacement&gt;,$(var))</code> ，而<code>$(var: &lt;suffix&gt;=&lt;replacement&gt;)</code> 则相当于<code>$(patsubst %&lt;suffix&gt;,%&lt;replacement&gt;,$(var))</code> 。</li>
+</ul>
+<p>例如有:</p>
+<pre><code>objects = foo.o bar.o baz.o，
+</code></pre><p>那么， <code>$(objects:.o=.c)</code> 和 <code>$(patsubst %.o,%.c,$(objects))</code> 是一样的。</p>
+<h3 id="strip"><a href="#strip" class="headerlink" title="strip"></a>strip</h3><pre><code>$(strip &lt;string&gt;)
+</code></pre><ul>
+<li>名称：去空格函数。</li>
+<li>功能：去掉 <code>&lt;string&gt;</code> 字串中开头和结尾的空字符。</li>
+<li>返回：返回被去掉空格的字符串值。</li>
+<li>示例：</li>
+</ul>
+<pre><code>$(strip a b c )
+</code></pre><p>把字串 <code>a b c</code> 去到开头和结尾的空格，结果是 <code>a b c</code> 。</p>
+<h3 id="findstring"><a href="#findstring" class="headerlink" title="findstring"></a>findstring</h3><pre><code>$(findstring &lt;find&gt;,&lt;in&gt;)
+</code></pre><ul>
+<li>名称：查找字符串函数</li>
+<li>功能：在字串 <code>&lt;in&gt;</code> 中查找 <code>&lt;find&gt;</code> 字串。</li>
+<li>返回：如果找到，那么返回 <code>&lt;find&gt;</code> ，否则返回空字符串。</li>
+<li>示例：</li>
+</ul>
+<pre><code>$(findstring a,a b c)
+$(findstring a,b c)
+</code></pre><p>第一个函数返回 <code>a</code> 字符串，第二个返回空字符串</p>
+<h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><pre><code>$(filter &lt;pattern...&gt;,&lt;text&gt;)
+</code></pre><ul>
+<li>名称：过滤函数</li>
+<li>功能：以 <code>&lt;pattern&gt;</code> 模式过滤 <code>&lt;text&gt;</code> 字符串中的单词，保留符合模式<code>&lt;pattern&gt;</code> 的单词。可以有多个模式。</li>
+<li>返回：返回符合模式 <code>&lt;pattern&gt;</code> 的字串。</li>
+<li>示例：</li>
+</ul>
+<pre><code>sources := foo.c bar.c baz.s ugh.h
+foo: $(sources)
+    cc $(filter %.c %.s,$(sources)) -o foo
+</code></pre><p>  <code>$(filter %.c %.s,$(sources))</code> 返回的值是 <code>foo.c bar.c baz.s</code> 。</p>
+<h3 id="filter-out"><a href="#filter-out" class="headerlink" title="filter-out"></a>filter-out</h3><pre><code>$(filter-out &lt;pattern...&gt;,&lt;text&gt;)
+</code></pre><ul>
+<li>名称：反过滤函数</li>
+<li>功能：以 <code>&lt;pattern&gt;</code> 模式过滤 <code>&lt;text&gt;</code> 字符串中的单词，去除符合模式<code>&lt;pattern&gt;</code> 的单词。可以有多个模式。</li>
+<li>返回：返回不符合模式 <code>&lt;pattern&gt;</code> 的字串。</li>
+<li>示例：</li>
+</ul>
+<pre><code>objects=main1.o foo.o main2.o bar.o
+mains=main1.o main2.o
+</code></pre><p>  <code>$(filter-out $(mains),$(objects))</code> 返回值是 <code>foo.o bar.o</code> 。</p>
+<h3 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h3><pre><code>$(sort &lt;list&gt;)
+</code></pre><ul>
+<li>名称：排序函数</li>
+<li>功能：给字符串 <code>&lt;list&gt;</code> 中的单词排序（升序）。</li>
+<li>返回：返回排序后的字符串。</li>
+<li>示例： <code>$(sort foo bar lose)</code> 返回 <code>bar foo lose</code> 。</li>
+<li>备注： <code>sort</code> 函数会去掉 <code>&lt;list&gt;</code> 中相同的单词。</li>
+</ul>
+<h3 id="word"><a href="#word" class="headerlink" title="word"></a>word</h3><pre><code>$(word &lt;n&gt;,&lt;text&gt;)
+</code></pre><ul>
+<li>名称：取单词函数</li>
+<li>功能：取字符串 <code>&lt;text&gt;</code> 中第 <code>&lt;n&gt;</code> 个单词。（从一开始）</li>
+<li>返回：返回字符串 <code>&lt;text&gt;</code> 中第 <code>&lt;n&gt;</code> 个单词。如果 <code>&lt;n&gt;</code> 比 <code>&lt;text&gt;</code> 中的单词数要大，那么返回空字符串。</li>
+<li>示例： <code>$(word 2, foo bar baz)</code> 返回值是 <code>bar</code> 。</li>
+</ul>
+<h3 id="wordlist"><a href="#wordlist" class="headerlink" title="wordlist"></a>wordlist</h3><pre><code>$(wordlist &lt;ss&gt;,&lt;e&gt;,&lt;text&gt;)
+</code></pre><ul>
+<li>名称：取单词串函数</li>
+<li>功能：从字符串 <code>&lt;text&gt;</code> 中取从 <code>&lt;ss&gt;</code> 开始到 <code>&lt;e&gt;</code> 的单词串。 <code>&lt;ss&gt;</code>和 <code>&lt;e&gt;</code> 是一个数字。</li>
+<li>返回：返回字符串 <code>&lt;text&gt;</code> 中从 <code>&lt;ss&gt;</code> 到 <code>&lt;e&gt;</code> 的单词字串。如果 <code>&lt;ss&gt;</code>比 <code>&lt;text&gt;</code> 中的单词数要大，那么返回空字符串。如果 <code>&lt;e&gt;</code> 大于 <code>&lt;text&gt;</code> 的单词数，那么返回从 <code>&lt;ss&gt;</code> 开始，到 <code>&lt;text&gt;</code> 结束的单词串。</li>
+<li>示例： <code>$(wordlist 2, 3, foo bar baz)</code> 返回值是 <code>bar baz</code> 。</li>
+</ul>
+<h3 id="words"><a href="#words" class="headerlink" title="words"></a>words</h3><pre><code>$(words &lt;text&gt;)
+</code></pre><ul>
+<li>名称：单词个数统计函数</li>
+<li>功能：统计 <code>&lt;text&gt;</code> 中字符串中的单词个数。</li>
+<li>返回：返回 <code>&lt;text&gt;</code> 中的单词数。</li>
+<li>示例： <code>$(words, foo bar baz)</code> 返回值是 <code>3</code> 。</li>
+<li>备注：如果我们要取 <code>&lt;text&gt;</code> 中最后的一个单词，我们可以这样：<code>$(word $(words &lt;text&gt;),&lt;text&gt;)</code> 。</li>
+</ul>
+<h3 id="firstword"><a href="#firstword" class="headerlink" title="firstword"></a>firstword</h3><pre><code>$(firstword &lt;text&gt;)
+</code></pre><ul>
+<li>名称：首单词函数——firstword。</li>
+<li>功能：取字符串 <code>&lt;text&gt;</code> 中的第一个单词。</li>
+<li>返回：返回字符串 <code>&lt;text&gt;</code> 的第一个单词。</li>
+<li>示例： <code>$(firstword foo bar)</code> 返回值是 <code>foo</code>。</li>
+<li>备注：这个函数可以用 <code>word</code> 函数来实现： <code>$(word 1,&lt;text&gt;)</code> 。</li>
+</ul>
+<p>以上，是所有的字符串操作函数，如果搭配混合使用，可以完成比较复杂的功能。这里，举一个现实中应用的例子。我们知道，make使用 <code>VPATH</code> 变量来指定“依赖文件”的搜索路径。于是，我们可以利用这个搜索路径来指定编译器对头文件的搜索路径参数 <code>CFLAGS</code> ，如：</p>
+<pre><code>override CFLAGS += $(patsubst %,-I%,$(subst :, ,$(VPATH)))
+</code></pre><p>如果我们的 <code>$(VPATH)</code> 值是 <code>src:../headers</code> ，那么<code>$(patsubst %,-I%,$(subst :, ,$(VPATH)))</code> 将返回 <code>-Isrc -I../headers</code> ，这正是cc或gcc搜索头文件路径的参数。</p>
+<h2 id="文件名操作函数"><a href="#文件名操作函数" class="headerlink" title="文件名操作函数"></a>文件名操作函数</h2><p>下面我们要介绍的函数主要是处理文件名的。每个函数的参数字符串都会被当做一个或是一系列的文件名来对待。</p>
+<h3 id="dir"><a href="#dir" class="headerlink" title="dir"></a>dir</h3><pre><code>$(dir &lt;names...&gt;)
+</code></pre><ul>
+<li>名称：取目录函数——dir。</li>
+<li>功能：从文件名序列 <code>&lt;names&gt;</code> 中取出目录部分。目录部分是指最后一个反斜杠（ <code>/</code> ）之前的部分。如果没有反斜杠，那么返回 <code>./</code> 。</li>
+<li>返回：返回文件名序列 <code>&lt;names&gt;</code> 的目录部分。</li>
+<li>示例： <code>$(dir src/foo.c hacks)</code> 返回值是 <code>src/ ./</code> 。</li>
+</ul>
+<h3 id="notdir"><a href="#notdir" class="headerlink" title="notdir"></a>notdir</h3><pre><code>$(notdir &lt;names...&gt;)
+</code></pre><ul>
+<li>名称：取文件函数——notdir。</li>
+<li>功能：从文件名序列 <code>&lt;names&gt;</code> 中取出非目录部分。非目录部分是指最後一个反斜杠（ <code>/</code> ）之后的部分。</li>
+<li>返回：返回文件名序列 <code>&lt;names&gt;</code> 的非目录部分。</li>
+<li>示例:  <code>$(notdir src/foo.c hacks)</code> 返回值是 <code>foo.c hacks</code> 。</li>
+</ul>
+<h3 id="suffix"><a href="#suffix" class="headerlink" title="suffix"></a>suffix</h3><pre><code>$(suffix &lt;names...&gt;)
+</code></pre><ul>
+<li>名称：取後缀函数——suffix。</li>
+<li>功能：从文件名序列 <code>&lt;names&gt;</code> 中取出各个文件名的后缀。</li>
+<li>返回：返回文件名序列 <code>&lt;names&gt;</code> 的后缀序列，如果文件没有后缀，则返回空字串。</li>
+<li>示例： <code>$(suffix src/foo.c src-1.0/bar.c hacks)</code> 返回值是 <code>.c .c</code>。</li>
+</ul>
+<h3 id="basename"><a href="#basename" class="headerlink" title="basename"></a>basename</h3><pre><code>$(basename &lt;names...&gt;)
+</code></pre><ul>
+<li>名称：取前缀函数——basename。</li>
+<li>功能：从文件名序列 <code>&lt;names&gt;</code> 中取出各个文件名的前缀部分。</li>
+<li>返回：返回文件名序列 <code>&lt;names&gt;</code> 的前缀序列，如果文件没有前缀，则返回空字串。</li>
+<li>示例： <code>$(basename src/foo.c src-1.0/bar.c hacks)</code> 返回值是<code>src/foo src-1.0/bar hacks</code> 。</li>
+</ul>
+<h3 id="addsuffix"><a href="#addsuffix" class="headerlink" title="addsuffix"></a>addsuffix</h3><pre><code>$(addsuffix &lt;suffix&gt;,&lt;names...&gt;)
+</code></pre><ul>
+<li>名称：加后缀函数——addsuffix。</li>
+<li>功能：把后缀 <code>&lt;suffix&gt;</code> 加到 <code>&lt;names&gt;</code> 中的每个单词后面。</li>
+<li>返回：返回加过后缀的文件名序列。</li>
+<li>示例： <code>$(addsuffix .c,foo bar)</code> 返回值是 <code>foo.c bar.c</code> 。</li>
+</ul>
+<h3 id="addprefix"><a href="#addprefix" class="headerlink" title="addprefix"></a>addprefix</h3><pre><code>$(addprefix &lt;prefix&gt;,&lt;names...&gt;)
+</code></pre><ul>
+<li>名称：加前缀函数——addprefix。</li>
+<li>功能：把前缀 <code>&lt;prefix&gt;</code> 加到 <code>&lt;names&gt;</code> 中的每个单词后面。</li>
+<li>返回：返回加过前缀的文件名序列。</li>
+<li>示例： <code>$(addprefix src/,foo bar)</code> 返回值是 <code>src/foo src/bar</code> 。</li>
+</ul>
+<h3 id="join"><a href="#join" class="headerlink" title="join"></a>join</h3><pre><code>$(join &lt;list1&gt;,&lt;list2&gt;)
+</code></pre><ul>
+<li>名称：连接函数——join。</li>
+<li>功能：把 <code>&lt;list2&gt;</code> 中的单词对应地加到 <code>&lt;list1&gt;</code> 的单词后面。如果 <code>&lt;list1&gt;</code> 的单词个数要比 <code>&lt;list2&gt;</code> 的多，那么， <code>&lt;list1&gt;</code> 中的多出来的单词将保持原样。如果<code>&lt;list2&gt;</code> 的单词个数要比 <code>&lt;list1&gt;</code> 多，那么， <code>&lt;list2&gt;</code> 多出来的单词将被复制到<code>&lt;list1&gt;</code> 中。</li>
+<li>返回：返回连接过后的字符串。</li>
+<li>示例： <code>$(join aaa bbb , 111 222 333)</code> 返回值是 <code>aaa111 bbb222 333</code> 。</li>
+</ul>
+<h3 id="foreach-函数"><a href="#foreach-函数" class="headerlink" title="foreach 函数"></a>foreach 函数</h3><p>foreach函数和别的函数非常的不一样。因为这个函数是用来做循环用的，Makefile中的foreach函数几乎是仿照于Unix标准Shell（/bin/sh）中的for语句，或是C-Shell（/bin/csh）中的foreach语句而构建的。它的语法是：</p>
+<pre><code>$(foreach &lt;var&gt;,&lt;list&gt;,&lt;text&gt;)
+</code></pre><p>这个函数的意思是，把参数 <code>&lt;list&gt;</code> 中的单词逐一取出放到参数 <code>&lt;var&gt;</code> 所指定的变量中，然后再执行 <code>&lt;text&gt;</code> 所包含的表达式。每一次 <code>&lt;text&gt;</code> 会返回一个字符串，循环过程中，<code>&lt;text&gt;</code> 的所返回的每个字符串会以空格分隔，最后当整个循环结束时， <code>&lt;text&gt;</code> 所返回的每个字符串所组成的整个字符串（以空格分隔）将会是foreach函数的返回值。</p>
+<p>所以， <code>&lt;var&gt;</code> 最好是一个变量名， <code>&lt;list&gt;</code> 可以是一个表达式，而 <code>&lt;text&gt;</code> 中一般会使用 <code>&lt;var&gt;</code> 这个参数来依次枚举 <code>&lt;list&gt;</code> 中的单词。举个例子：</p>
+<pre><code>names := a b c d
 
-prog1 : prog1.o utils.o
-    cc -o prog1 prog1.o utils.o
+files := $(foreach n,$(names),$(n).o)
+</code></pre><p>上面的例子中， <code>$(name)</code> 中的单词会被挨个取出，并存到变量 <code>n</code> 中， <code>$(n).o</code> 每次根据 <code>$(n)</code> 计算出一个值，这些值以空格分隔，最后作为foreach函数的返回，所以， <code>$(files)</code>的值是 <code>a.o b.o c.o d.o</code> 。</p>
+<p>注意，foreach中的 <code>&lt;var&gt;</code> 参数是一个临时的局部变量，foreach函数执行完后，参数 <code>&lt;var&gt;</code>的变量将不在作用，其作用域只在foreach函数当中。</p>
+<h3 id="if-函数"><a href="#if-函数" class="headerlink" title="if 函数"></a>if 函数</h3><p>if函数很像GNU的make所支持的条件语句——ifeq（参见前面所述的章节），if函数的语法是：</p>
+<pre><code>$(if &lt;condition&gt;,&lt;then-part&gt;)
+</code></pre><p>或是</p>
+<pre><code>$(if &lt;condition&gt;,&lt;then-part&gt;,&lt;else-part&gt;)
+</code></pre><p>可见，if函数可以包含“else”部分，或是不含。即if函数的参数可以是两个，也可以是三个。<code>&lt;condition&gt;</code> 参数是if的表达式，如果其返回的为非空字符串，那么这个表达式就相当于返回真，于是， <code>&lt;then-part&gt;</code> 会被计算，否则 <code>&lt;else-part&gt;</code> 会被计算。</p>
+<p>而if函数的返回值是，如果 <code>&lt;condition&gt;</code> 为真（非空字符串），那个 <code>&lt;then-part&gt;</code>会是整个函数的返回值，如果 <code>&lt;condition&gt;</code> 为假（空字符串），那么 <code>&lt;else-part&gt;</code> 会是整个函数的返回值，此时如果 <code>&lt;else-part&gt;</code> 没有被定义，那么，整个函数返回空字串。</p>
+<p>所以， <code>&lt;then-part&gt;</code> 和 <code>&lt;else-part&gt;</code> 只会有一个被计算。</p>
+<h3 id="call函数"><a href="#call函数" class="headerlink" title="call函数"></a>call函数</h3><p>call函数是唯一一个可以用来创建新的参数化的函数。你可以写一个非常复杂的表达式，这个表达式中，你可以定义许多参数，然后你可以call函数来向这个表达式传递参数。其语法是：</p>
+<pre><code>$(call &lt;expression&gt;,&lt;parm1&gt;,&lt;parm2&gt;,...,&lt;parmn&gt;)
+</code></pre><p>当make执行这个函数时， <code>&lt;expression&gt;</code> 参数中的变量，如 <code>$(1)</code> 、 <code>$(2)</code> 等，会被参数 <code>&lt;parm1&gt;</code> 、 <code>&lt;parm2&gt;</code> 、 <code>&lt;parm3&gt;</code> 依次取代。而 <code>&lt;expression&gt;</code> 的返回值就是 call 函数的返回值。例如：</p>
+<pre><code>reverse =  $(1) $(2)
 
-prog2 : prog2.o
-    cc -o prog2 prog2.o
+foo = $(call reverse,a,b)
+</code></pre><p>那么， <code>foo</code> 的值就是 <code>a b</code> 。当然，参数的次序是可以自定义的，不一定是顺序的，如：</p>
+<pre><code>reverse =  $(2) $(1)
 
-prog3 : prog3.o sort.o utils.o
-    cc -o prog3 prog3.o sort.o utils.o
-</code></pre><p>我们知道，Makefile中的第一个目标会被作为其默认目标。我们声明了一个“all”的伪目标，其依赖于其它三个目标。由于默认目标的特性是，总是被执行的，但由于“all”又是一个伪目标，伪目标只是一个标签不会生成文件，所以不会有“all”文件产生。于是，其它三个目标的规则总是会被决议。也就达到了我们一口气生成多个目标的目的。 <code>.PHONY : all</code> 声明了“all”这个目标为“伪目标”。（注：这里的显式“.PHONY : all” 不写的话一般情况也可以正确的执行，这样make可通过隐式规则推导出， “all” 是一个伪目标，执行make不会生成“all”文件，而执行后面的多个目标。建议：显式写出是一个好习惯。）</p>
-<p>随便提一句，从上面的例子我们可以看出，目标也可以成为依赖。所以，伪目标同样也可成为依赖。看下面的例子：</p>
-<pre><code>.PHONY : cleanall cleanobj cleandiff
+foo = $(call reverse,a,b)
+</code></pre><p>此时的 <code>foo</code> 的值就是 <code>b a</code> 。</p>
+<p>需要注意：在向 call 函数传递参数时要尤其注意空格的使用。call 函数在处理参数时，第2个及其之后的参数中的空格会被保留，因而可能造成一些奇怪的效果。因而在向call函数提供参数时，最安全的做法是去除所有多余的空格。</p>
+<h3 id="origin函数"><a href="#origin函数" class="headerlink" title="origin函数"></a>origin函数</h3><p>origin函数不像其它的函数，他并不操作变量的值，他只是告诉你你的这个变量是哪里来的？其语法是：</p>
+<pre><code>$(origin &lt;variable&gt;)
+</code></pre><p><table><tr><td bgcolor="#CCFFFF"> 注意， <code>&lt;variable&gt;</code> 是变量的名字，不应该是引用。所以你最好不要在 <code>&lt;variable&gt;</code> 中使用<code>$</code> 字符。 </td></tr></table><br>Origin函数会以其返回值来告诉你这个变量的“出生情况”，下面，是origin函数的返回值:</p>
+<ul>
+<li><p>undefined</p>
+<pre><code>如果 &lt;variable&gt; 从来没有定义过，origin函数返回这个值 undefined`
+</code></pre></li>
+<li><p>default</p>
+<pre><code>如果 &lt;variable&gt; 是一个默认的定义，比如“CC”这个变量，这种变量我们将在后面讲述。
+</code></pre></li>
+<li><p>environment</p>
+<pre><code>如果 &lt;variable&gt; 是一个环境变量，并且当Makefile被执行时， -e 参数没有被打开。
+</code></pre></li>
+<li><p>file</p>
+<pre><code>如果 &lt;variable&gt; 这个变量被定义在Makefile中。
+</code></pre></li>
+<li><p>command line</p>
+<pre><code>如果 &lt;variable&gt; 这个变量是被命令行定义的。
+</code></pre></li>
+<li><p>override</p>
+<pre><code>如果 &lt;variable&gt; 是被override指示符重新定义的。
+</code></pre></li>
+<li><p>automatic</p>
+<pre><code>如果 &lt;variable&gt; 是一个命令运行中的自动化变量。关于自动化变量将在后面讲述。
+</code></pre></li>
+</ul>
+<p>这些信息对于我们编写Makefile是非常有用的，例如，假设我们有一个Makefile其包了一个定义文件Make.def，在 Make.def中定义了一个变量“bletch”，而我们的环境中也有一个环境变量“bletch”，此时，我们想判断一下，如果变量来源于环境，那么我们就把之重定义了，如果来源于Make.def或是命令行等非环境的，那么我们就不重新定义它。于是，在我们的Makefile中，我们可以这样写：</p>
+<pre><code>ifdef bletch
+    ifeq &quot;$(origin bletch)&quot; &quot;environment&quot;
+        bletch = barf, gag, etc.
+    endif
+endif
+</code></pre><p>当然，你也许会说，使用 <code>override</code> 关键字不就可以重新定义环境中的变量了吗？为什么需要使用这样的步骤？是的，我们用 <code>override</code> 是可以达到这样的效果，可是 <code>override</code> 过于粗暴，它同时会把从命令行定义的变量也覆盖了，而我们只想重新定义环境传来的，而不想重新定义命令行传来的。</p>
+<h3 id="shell函数"><a href="#shell函数" class="headerlink" title="shell函数"></a>shell函数</h3><p>shell函数也不像其它的函数。顾名思义，它的参数应该就是操作系统Shell的命令。它和反引号“`”是相同的功能。这就是说，shell函数把执行操作系统命令后的输出作为函数返回。于是，我们可以用操作系统命令以及字符串处理命令awk，sed等等命令来生成一个变量，如：</p>
+<pre><code>contents := $(shell cat foo)
+files := $(shell echo *.c)
+</code></pre><p>注意，这个函数会新生成一个Shell程序来执行命令，所以你要注意其运行性能，如果你的Makefile中有一些比较复杂的规则，并大量使用了这个函数，那么对于你的系统性能是有害的。特别是Makefile的隐晦的规则可能会让你的shell函数执行的次数比你想像的多得多。</p>
+<h3 id="控制make的函数"><a href="#控制make的函数" class="headerlink" title="控制make的函数"></a>控制make的函数</h3><p>make提供了一些函数来控制make的运行。通常，你需要检测一些运行Makefile时的运行时信息，并且根据这些信息来决定，你是让make继续执行，还是停止。</p>
+<pre><code>$(error &lt;text ...&gt;)
+</code></pre><p>产生一个致命的错误， <code>&lt;text ...&gt;</code> 是错误信息。注意，error函数不会在一被使用就会产生错误信息，所以如果你把其定义在某个变量中，并在后续的脚本中使用这个变量，那么也是可以的。例如：</p>
+<p>示例一：</p>
+<pre><code>ifdef ERROR_001
+    $(error error is $(ERROR_001))
+endif
+</code></pre><p>示例二：</p>
+<pre><code>ERR = $(error found an error!)
 
-cleanall : cleanobj cleandiff
-    rm program
+.PHONY: err
 
-cleanobj :
-    rm *.o
-
-cleandiff :
-    rm *.diff
-</code></pre><p>“make cleanall”将清除所有要被清除的文件。“cleanobj”和“cleandiff”这两个伪目标有点像“子程序”的意思。我们可以输入“make cleanall”和“make cleanobj”和“make cleandiff”命令来达到清除不同种类文件的目的。</p>
-<h2 id="多目标"><a href="#多目标" class="headerlink" title="多目标"></a>多目标</h2><p>Makefile的规则中的目标可以不止一个，其支持多目标，有可能我们的多个目标同时依赖于一个文件，并且其生成的命令大体类似。于是我们就能把其合并起来。当然，多个目标的生成规则的执行命令不是同一个，这可能会给我们带来麻烦，不过好在我们可以使用一个自动化变量 <code>$@</code> （关于自动化变量，将在后面讲述），这个变量表示着目前规则中所有的目标的集合，这样说可能很抽象，还是看一个例子吧。</p>
-<pre><code>bigoutput littleoutput : text.g
-    generate text.g -$(subst output,,$@) &gt; $@
-</code></pre><p>上述规则等价于：</p>
-<pre><code>bigoutput : text.g
-    generate text.g -big &gt; bigoutput
-littleoutput : text.g
-    generate text.g -little &gt; littleoutput
-</code></pre><p>其中， <code>-$(subst output,,$@)</code> 中的 <code>$</code> 表示执行一个Makefile的函数，函数名为subst，后面的为参数。关于函数，将在后面讲述。这里的这个函数是替换字符串的意思， <code>$@</code> 表示目标的集合，就像一个数组， <code>$@</code> 依次取出目标，并执于命令。</p>
-<h2 id="静态模式"><a href="#静态模式" class="headerlink" title="静态模式"></a>静态模式</h2><p>静态模式可以更加容易地定义多目标的规则，可以让我们的规则变得更加的有弹性和灵活。我们还是先来看一下语法：</p>
-<pre><code>&lt;targets ...&gt; : &lt;target-pattern&gt; : &lt;prereq-patterns ...&gt;
-    &lt;commands&gt;
-    ...
-</code></pre><p>targets定义了一系列的目标文件，可以有通配符。是目标的一个集合。</p>
-<p>target-parrtern是指明了targets的模式，也就是的目标集模式。</p>
-<p>prereq-parrterns是目标的依赖模式，它对target-parrtern形成的模式再进行一次依赖目标的定义。</p>
-<p>这样描述这三个东西，可能还是没有说清楚，还是举个例子来说明一下吧。如果我们的<target-parrtern>定义成 <code>%.o</code> ，意思是我们的<target>;集合中都是以 <code>.o</code> 结尾的，而如果我们的<prereq-parrterns>定义成 <code>%.c</code> ，意思是对<target-parrtern>所形成的目标集进行二次定义，其计算方法是，取<target-parrtern>模式中的 <code>%</code> （也就是去掉了 <code>.o</code> 这个结尾），并为其加上 <code>.c</code> 这个结尾，形成的新集合。</target-parrtern></target-parrtern></prereq-parrterns></target></target-parrtern></p>
-<p>所以，我们的“目标模式”或是“依赖模式”中都应该有 <code>%</code> 这个字符，如果你的文件名中有 <code>%</code> 那么你可以使用反斜杠 <code>\</code> 进行转义，来标明真实的 <code>%</code> 字符。</p>
-<p>看一个例子：</p>
-<pre><code>objects = foo.o bar.o
-
-all: $(objects)
-
-$(objects): %.o: %.c
-    $(CC) -c $(CFLAGS) $&lt; -o $@
-</code></pre><p>上面的例子中，指明了我们的目标从$object中获取， <code>%.o</code> 表明要所有以 <code>.o</code> 结尾的目标，也就是 <code>foo.o bar.o</code> ，也就是变量 <code>$object</code> 集合的模式，而依赖模式 <code>%.c</code> 则取模式<code>%.o</code> 的 <code>%</code> ，也就是 <code>foo bar</code> ，并为其加下 <code>.c</code> 的后缀，于是，我们的依赖目标就是 <code>foo.c bar.c</code> 。而命令中的 <code>$&lt;</code> 和 <code>$@</code> 则是自动化变量， <code>$&lt;</code> 表示第一个依赖文件， <code>$@</code> 表示目标集（也就是“foo.o bar.o”）。于是，上面的规则展开后等价于下面的规则：</p>
-<pre><code>foo.o : foo.c
-    $(CC) -c $(CFLAGS) foo.c -o foo.o
-bar.o : bar.c
-    $(CC) -c $(CFLAGS) bar.c -o bar.o
-</code></pre><p>试想，如果我们的 <code>%.o</code> 有几百个，那么我们只要用这种很简单的“静态模式规则”就可以写完一堆规则，实在是太有效率了。“静态模式规则”的用法很灵活，如果用得好，那会是一个很强大的功能。再看一个例子：</p>
-<pre><code>files = foo.elc bar.o lose.o
-
-$(filter %.o,$(files)): %.o: %.c
-    $(CC) -c $(CFLAGS) $&lt; -o $@
-$(filter %.elc,$(files)): %.elc: %.el
-    emacs -f batch-byte-compile $&lt;
-</code></pre><p>$(filter %.o,$(files))表示调用Makefile的filter函数，过滤“$files”集，只要其中模式为“%.o”的内容。其它的内容，我就不用多说了吧。这个例子展示了Makefile中更大的弹性。</p>
-<h2 id="自动生成依赖性"><a href="#自动生成依赖性" class="headerlink" title="自动生成依赖性"></a>自动生成依赖性</h2><p>在Makefile中，我们的依赖关系可能会需要包含一系列的头文件，比如，如果我们的main.c中有一句<code>#include &quot;defs.h&quot;</code> ，那么我们的依赖关系应该是：</p>
-<pre><code>main.o : main.c defs.h
-</code></pre><p>但是，如果是一个比较大型的工程，你必需清楚哪些C文件包含了哪些头文件，并且，你在加入或删除头文件时，也需要小心地修改Makefile，这是一个很没有维护性的工作。为了避免这种繁重而又容易出错的事情，我们可以使用C/C++编译的一个功能。大多数的C/C++编译器都支持一个“-M”的选项，即自动找寻源文件中包含的头文件，并生成一个依赖关系。例如，如果我们执行下面的命令::</p>
-<pre><code>cc -M main.c
-</code></pre><p>其输出是：</p>
-<pre><code>main.o : main.c defs.h
-</code></pre><p>于是由编译器自动生成的依赖关系，这样一来，你就不必再手动书写若干文件的依赖关系，而由编译器自动生成了。需要提醒一句的是，如果你使用GNU的C/C++编译器，你得用 <code>-MM</code> 参数，不然， <code>-M</code>参数会把一些标准库的头文件也包含进来。</p>
-<p>gcc -M main.c的输出是:</p>
-<pre><code>main.o: main.c defs.h /usr/include/stdio.h /usr/include/features.h \
-     /usr/include/sys/cdefs.h /usr/include/gnu/stubs.h \
-     /usr/lib/gcc-lib/i486-suse-linux/2.95.3/include/stddef.h \
-     /usr/include/bits/types.h /usr/include/bits/pthreadtypes.h \
-     /usr/include/bits/sched.h /usr/include/libio.h \
-     /usr/include/_G_config.h /usr/include/wchar.h \
-     /usr/include/bits/wchar.h /usr/include/gconv.h \
-     /usr/lib/gcc-lib/i486-suse-linux/2.95.3/include/stdarg.h \
-     /usr/include/bits/stdio_lim.h
-</code></pre><p>gcc -MM main.c的输出则是:</p>
-<pre><code>main.o: main.c defs.h
-</code></pre><p>那么，编译器的这个功能如何与我们的Makefile联系在一起呢。因为这样一来，我们的Makefile也要根据这些源文件重新生成，让 Makefile自已依赖于源文件？这个功能并不现实，不过我们可以有其它手段来迂回地实现这一功能。GNU组织建议把编译器为每一个源文件的自动生成的依赖关系放到一个文件中，为每一个 <code>name.c</code> 的文件都生成一个 <code>name.d</code> 的Makefile文件， <code>.d</code> 文件中就存放对应<code>.c</code> 文件的依赖关系。</p>
-<p>于是，我们可以写出 <code>.c</code> 文件和 <code>.d</code> 文件的依赖关系，并让make自动更新或生成 <code>.d</code>文件，并把其包含在我们的主Makefile中，这样，我们就可以自动化地生成每个文件的依赖关系了。</p>
-<p>这里，我们给出了一个模式规则来产生 <code>.d</code> 文件：</p>
-<pre><code>%.d: %.c
-    @set -e; rm -f $@; \
-    $(CC) -M $(CPPFLAGS) $&lt; &gt; $@.$$$$; \
-    sed &apos;s,\($*\)\.o[ :]*,\1.o $@ : ,g&apos; &lt; $@.$$$$ &gt; $@; \
-    rm -f $@.$$$$
-</code></pre><p>这个规则的意思是，所有的 <code>.d</code> 文件依赖于 <code>.c</code> 文件， <code>rm -f $@</code> 的意思是删除所有的目标，也就是 <code>.d</code> 文件，第二行的意思是，为每个依赖文件 <code>$&lt;</code> ，也就是 <code>.c</code> 文件生成依赖文件， <code>$@</code> 表示模式 <code>%.d</code> 文件，如果有一个C文件是name.c，那么 <code>%</code> 就是<code>name</code> ， <code>$$$$</code> 意为一个随机编号，第二行生成的文件有可能是“name.d.12345”，第三行使用sed命令做了一个替换，关于sed命令的用法请参看相关的使用文档。第四行就是删除临时文件。</p>
-<p>总而言之，这个模式要做的事就是在编译器生成的依赖关系中加入 <code>.d</code> 文件的依赖，即把依赖关系：</p>
-<pre><code>main.o : main.c defs.h
-</code></pre><p>转成：</p>
-<pre><code>main.o main.d : main.c defs.h
-</code></pre><p>于是，我们的 <code>.d</code> 文件也会自动更新了，并会自动生成了，当然，你还可以在这个 <code>.d</code> 文件中加入的不只是依赖关系，包括生成的命令也可一并加入，让每个 <code>.d</code> 文件都包含一个完赖的规则。一旦我们完成这个工作，接下来，我们就要把这些自动生成的规则放进我们的主Makefile中。我们可以使用Makefile的“include”命令，来引入别的Makefile文件（前面讲过），例如：</p>
-<pre><code>sources = foo.c bar.c
-
-include $(sources:.c=.d)
-</code></pre><p>上述语句中的 <code>$(sources:.c=.d)</code> 中的 <code>.c=.d</code> 的意思是做一个替换，把变量<code>$(sources)</code> 所有 <code>.c</code> 的字串都替换成 <code>.d</code> ，关于这个“替换”的内容，在后面我会有更为详细的讲述。当然，你得注意次序，因为include是按次序来载入文件，最先载入的 <code>.d</code> 文件中的目标会成为默认目标。</p>
+err: $(ERR)
+</code></pre><p>示例一会在变量ERROR_001定义了后执行时产生error调用，而示例二则在目录err被执行时才发生error调用。</p>
+<pre><code>$(warning &lt;text ...&gt;)
+</code></pre><p>这个函数很像error函数，只是它并不会让make退出，只是输出一段警告信息，而make继续执行。</p>
 
       
 
@@ -376,18 +442,9 @@ include $(sources:.c=.d)
   
 <nav id="article-nav">
   
-    <a href="/Makefile/mk_4_recipes/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          跟我一起写 Makefile(四)
-        
-      </div>
-    </a>
   
-  
-    <a href="/Makefile/mk_2_introduction/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">跟我一起写 Makefile(二)</div>
+    <a href="/Makefile/mk_6_conditionals/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">跟我一起写 Makefile(六)</div>
       <i class="icon-circle-right"></i>
     </a>
   
