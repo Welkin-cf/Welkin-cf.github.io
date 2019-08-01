@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://welkin-cf.github.io">
   <title>跟我一起写 Makefile(二) | Welkin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="makefile介绍make命令执行时，需要一个makefile文件，以告诉make命令需要怎么样的去编译和链接程序。">
+  <meta name="description" content="makefile介绍make命令执行时，需要一个makefile文件，以告诉make命令需要怎么样的去编译和链接程序。 首先，我们用一个示例来说明makefile的书写规则，以便给大家一个感性认识。这个示例来源于gnu的make使用手册，在这个示例中，我们的工程有8个c文件，和3个头文件，我们要写一个makefile来告诉make命令如何编译和链接这几个文件。">
 <meta name="keywords" content="Makefile">
 <meta property="og:type" content="article">
 <meta property="og:title" content="跟我一起写 Makefile(二)">
 <meta property="og:url" content="https://welkin-cf.github.io/Makefile/mk_2_introduction/index.html">
 <meta property="og:site_name" content="Welkin">
-<meta property="og:description" content="makefile介绍make命令执行时，需要一个makefile文件，以告诉make命令需要怎么样的去编译和链接程序。">
+<meta property="og:description" content="makefile介绍make命令执行时，需要一个makefile文件，以告诉make命令需要怎么样的去编译和链接程序。 首先，我们用一个示例来说明makefile的书写规则，以便给大家一个感性认识。这个示例来源于gnu的make使用手册，在这个示例中，我们的工程有8个c文件，和3个头文件，我们要写一个makefile来告诉make命令如何编译和链接这几个文件。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-30T14:46:27.924Z">
+<meta property="og:updated_time" content="2019-08-01T18:01:15.191Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="跟我一起写 Makefile(二)">
-<meta name="twitter:description" content="makefile介绍make命令执行时，需要一个makefile文件，以告诉make命令需要怎么样的去编译和链接程序。">
+<meta name="twitter:description" content="makefile介绍make命令执行时，需要一个makefile文件，以告诉make命令需要怎么样的去编译和链接程序。 首先，我们用一个示例来说明makefile的书写规则，以便给大家一个感性认识。这个示例来源于gnu的make使用手册，在这个示例中，我们的工程有8个c文件，和3个头文件，我们要写一个makefile来告诉make命令如何编译和链接这几个文件。">
   
   
     <link rel="icon" href="/favicon.png">
@@ -159,7 +159,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="makefile介绍"><a href="#makefile介绍" class="headerlink" title="makefile介绍"></a>makefile介绍</h2><p>make命令执行时，需要一个makefile文件，以告诉make命令需要怎么样的去编译和链接程序。<br><a id="more"></a><br>首先，我们用一个示例来说明makefile的书写规则，以便给大家一个感性认识。这个示例来源于gnu的make使用手册，在这个示例中，我们的工程有8个c文件，和3个头文件，我们要写一个makefile来告诉make命令如何编译和链接这几个文件。我们的规则是：</p>
+        <h2 id="makefile介绍"><a href="#makefile介绍" class="headerlink" title="makefile介绍"></a>makefile介绍</h2><p>make命令执行时，需要一个makefile文件，以告诉make命令需要怎么样的去编译和链接程序。</p>
+<p>首先，我们用一个示例来说明makefile的书写规则，以便给大家一个感性认识。这个示例来源于gnu的make使用手册，在这个示例中，我们的工程有8个c文件，和3个头文件，我们要写一个makefile来告诉make命令如何编译和链接这几个文件。<a id="more"></a>我们的规则是：</p>
 <ol>
 <li>如果这个工程没有编译过，那么我们的所有c文件都要编译并被链接。</li>
 <li>如果这个工程的某几个c文件被修改，那么我们只编译被修改的c文件，并链接目标程序。</li>

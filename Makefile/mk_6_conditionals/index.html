@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://welkin-cf.github.io">
   <title>跟我一起写 Makefile(六) | Welkin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="使用条件判断使用条件判断，可以让make根据运行时的不同情况选择不同的执行分支。">
+  <meta name="description" content="使用条件判断使用条件判断，可以让make根据运行时的不同情况选择不同的执行分支。条件表达式可以是比较变量的值，或是比较变量和常量的值。">
 <meta name="keywords" content="Makefile">
 <meta property="og:type" content="article">
 <meta property="og:title" content="跟我一起写 Makefile(六)">
 <meta property="og:url" content="https://welkin-cf.github.io/Makefile/mk_6_conditionals/index.html">
 <meta property="og:site_name" content="Welkin">
-<meta property="og:description" content="使用条件判断使用条件判断，可以让make根据运行时的不同情况选择不同的执行分支。">
+<meta property="og:description" content="使用条件判断使用条件判断，可以让make根据运行时的不同情况选择不同的执行分支。条件表达式可以是比较变量的值，或是比较变量和常量的值。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-30T16:17:42.274Z">
+<meta property="og:updated_time" content="2019-08-01T17:43:34.880Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="跟我一起写 Makefile(六)">
-<meta name="twitter:description" content="使用条件判断使用条件判断，可以让make根据运行时的不同情况选择不同的执行分支。">
+<meta name="twitter:description" content="使用条件判断使用条件判断，可以让make根据运行时的不同情况选择不同的执行分支。条件表达式可以是比较变量的值，或是比较变量和常量的值。">
   
   
     <link rel="icon" href="/favicon.png">
@@ -159,7 +159,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="使用条件判断"><a href="#使用条件判断" class="headerlink" title="使用条件判断"></a>使用条件判断</h2><p>使用条件判断，可以让make根据运行时的不同情况选择不同的执行分支。<a id="more"></a>条件表达式可以是比较变量的值，或是比较变量和常量的值。</p>
+        <h2 id="使用条件判断"><a href="#使用条件判断" class="headerlink" title="使用条件判断"></a>使用条件判断</h2><p>使用条件判断，可以让make根据运行时的不同情况选择不同的执行分支。条件表达式可以是比较变量的值，或是比较变量和常量的值。<a id="more"></a></p>
 <h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>下面的例子，判断 <code>$(CC)</code> 变量是否 <code>gcc</code> ，如果是的话，则使用GNU函数编译目标。</p>
 <pre><code>libs_for_gcc = -lgnu
 normal_libs =

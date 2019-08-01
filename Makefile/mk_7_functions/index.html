@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://welkin-cf.github.io">
   <title>跟我一起写 Makefile(七) | Welkin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="使用函数在Makefile中可以使用函数来处理变量，从而让我们的命令或是规则更为的灵活和具有智能。">
+  <meta name="description" content="使用函数在Makefile中可以使用函数来处理变量，从而让我们的命令或是规则更为的灵活和具有智能。make所支持的函数也不算很多，不过已经足够我们的操作了。函数调用后，函数的返回值可以当做变量来使用。">
 <meta name="keywords" content="Makefile">
 <meta property="og:type" content="article">
 <meta property="og:title" content="跟我一起写 Makefile(七)">
 <meta property="og:url" content="https://welkin-cf.github.io/Makefile/mk_7_functions/index.html">
 <meta property="og:site_name" content="Welkin">
-<meta property="og:description" content="使用函数在Makefile中可以使用函数来处理变量，从而让我们的命令或是规则更为的灵活和具有智能。">
+<meta property="og:description" content="使用函数在Makefile中可以使用函数来处理变量，从而让我们的命令或是规则更为的灵活和具有智能。make所支持的函数也不算很多，不过已经足够我们的操作了。函数调用后，函数的返回值可以当做变量来使用。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-01T06:45:49.958Z">
+<meta property="og:updated_time" content="2019-08-01T17:26:26.859Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="跟我一起写 Makefile(七)">
-<meta name="twitter:description" content="使用函数在Makefile中可以使用函数来处理变量，从而让我们的命令或是规则更为的灵活和具有智能。">
+<meta name="twitter:description" content="使用函数在Makefile中可以使用函数来处理变量，从而让我们的命令或是规则更为的灵活和具有智能。make所支持的函数也不算很多，不过已经足够我们的操作了。函数调用后，函数的返回值可以当做变量来使用。">
   
   
     <link rel="icon" href="/favicon.png">
@@ -159,7 +159,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="使用函数"><a href="#使用函数" class="headerlink" title="使用函数"></a>使用函数</h2><p>在Makefile中可以使用函数来处理变量，从而让我们的命令或是规则更为的灵活和具有智能。<a id="more"></a>make所支持的函数也不算很多，不过已经足够我们的操作了。函数调用后，函数的返回值可以当做变量来使用。</p>
+        <h2 id="使用函数"><a href="#使用函数" class="headerlink" title="使用函数"></a>使用函数</h2><p>在Makefile中可以使用函数来处理变量，从而让我们的命令或是规则更为的灵活和具有智能。make所支持的函数也不算很多，不过已经足够我们的操作了。函数调用后，函数的返回值可以当做变量来使用。<a id="more"></a></p>
 <h2 id="函数的调用语法"><a href="#函数的调用语法" class="headerlink" title="函数的调用语法"></a>函数的调用语法</h2><p>函数调用，很像变量的使用，也是以 <code>$</code> 来标识的，其语法如下：</p>
 <pre><code>$(&lt;function&gt; &lt;arguments&gt;)
 </code></pre><p>或是:</p>
@@ -441,6 +441,15 @@ err: $(ERR)
 
   
 <nav id="article-nav">
+  
+    <a href="/Makefile/mk_8_invoke/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          跟我一起写 Makefile(八)
+        
+      </div>
+    </a>
   
   
     <a href="/Makefile/mk_6_conditionals/" id="article-nav-older" class="article-nav-link-wrap">
